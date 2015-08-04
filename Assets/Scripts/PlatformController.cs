@@ -96,6 +96,10 @@ public class PlatformController : MonoBehaviour {
 		timeToEnergyGain -= Time.deltaTime;
 		timeToShieldGain -= Time.deltaTime;
 
+		if (!targetPlatform) {
+			RetargetPlatform();
+		}
+
 		if (shieldActive) {
 			if (shield <= 0) {
 				shield = 0;

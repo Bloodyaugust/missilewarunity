@@ -13,6 +13,7 @@ public class AIController : MonoBehaviour {
 
 	//to be moved to private
 	public Dictionary<string, float> pressure = new Dictionary<string, float>();
+	public float[] viewablePressures = new float[4];
 	public Dictionary<string, float> pressureRates = new Dictionary<string, float>();
 	public string[] pressures = {"silo", "generator", "booster"};
 	public string state = "idle";
@@ -71,11 +72,19 @@ public class AIController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		TileController newActiveTile;
-		string highestPressure = "";
+		string highestPressure = "silo";
 		string desiredBuild = "";
 
+		int i = 0;
 		foreach (var pair in pressureRates) {
 			pressure[pair.Key] += pair.Value * Time.deltaTime;
+
+			if (pressure[pair.Key] > pressure[highestPressure]) {
+				highestPressure = pair.Key;
+			}
+
+			viewablePressures[i] = pressure[pair.Key];
+			i++;
 		}
 
 		actionStore += aps * Time.deltaTime;
@@ -86,15 +95,15 @@ public class AIController : MonoBehaviour {
 		if (actionStore >= 1) {
 			switch (highestPressure) {
 				case "silo":
-					desiredBuild = "RocketSilo";
+					desiredBuild = "Rocket Silo";
 					break;
 
 				case "generator":
-					desiredBuild = "SolarGenerator";
+					desiredBuild = "Solar Generator";
 					break;
 
 				case "booster":
-					desiredBuild = "SmallBooster";
+					desiredBuild = "Small Booster";
 					break;
 
 				default:

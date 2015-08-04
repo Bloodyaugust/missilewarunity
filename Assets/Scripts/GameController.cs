@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
 		Vector3 currentPlatformPosition;
 		float currentAngle = 0;
 		int[] cells = new int[25];
+		cells[2] = 1;
 		cells[6] = 1;
 		cells[7] = 1;
 		cells[8] = 1;
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour {
 		cells[16] = 1;
 		cells[17] = 1;
 		cells[18] = 1;
+		cells[22] = 1;
 		int numEnemies = 1;
 		int difficulty = 1;
 		int numPlatforms = 1;
