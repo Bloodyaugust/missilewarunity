@@ -40,29 +40,30 @@ public class ProjectileController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		Vector3 directionVector = target.transform.position - transform.position;
-		Vector2 directionVector2D;
+		if (target) {
+			Vector3 directionVector = target.transform.position - transform.position;
+			Vector2 directionVector2D;
 
-		directionVector.Normalize();
-		directionVector *= speed;
+			directionVector.Normalize();
+			directionVector *= speed;
 
-		directionVector2D = new Vector2(directionVector.x, directionVector.y);
+			directionVector2D = new Vector2(directionVector.x, directionVector.y);
 
-		physicsBody.AddForce(directionVector2D);
+			physicsBody.AddForce(directionVector2D);
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D col) {
 		BuildingController building = col.gameObject.GetComponent<BuildingController>();
 		PlatformController platform = col.gameObject.GetComponent<PlatformController>();
 
+		//TODO: Write check to see if we are already inside a shield that was down
+
 		if (building && building.parentPlatformID != parentPlatformID) {
 			col.gameObject.SendMessage("Damage", damage);
 			Destroy(gameObject);
 		} else if (platform && platform.gameObject.GetInstanceID() != parentPlatformID) {
-			if (Random.value < platform.GetLeakChance(speed)) {
-				Debug.Log(platform.GetLeakChance(speed));
-				Debug.Log("Leak!");
-			} else {
+			if (Random.value <= platform.GetLeakChance(speed)) {
 				col.gameObject.SendMessage("DamageShield", damage);
 				Destroy(gameObject);
 			}

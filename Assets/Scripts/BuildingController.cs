@@ -16,6 +16,7 @@ public class BuildingController : MonoBehaviour {
 	public float health = 1;
 	public float actionInterval = 5;
 	public float shieldRegenAmount = 1;
+	public float shieldMaxAmount = 0;
 	public float energyGenerationAmount = 1;
 	public float fireInterval = 1;
 	public int buildQueueMax = 5;
@@ -35,6 +36,8 @@ public class BuildingController : MonoBehaviour {
 			buildQueue = new GameObject[buildQueueMax];
 			buildQueue[0] = baseProjectilePrefab;
 		}
+
+		parentPlatform.ChangeMaxShield(shieldMaxAmount);
 	}
 
 	// Update is called once per frame
@@ -91,6 +94,8 @@ public class BuildingController : MonoBehaviour {
 			if (buildingType == "command") {
 				transform.parent.SendMessage("CommandDeath");
 			}
+
+			parentPlatform.ChangeMaxShield(-shieldMaxAmount);
 
 			Destroy(gameObject);
 		}

@@ -27,7 +27,6 @@ public class TileController : MonoBehaviour {
 	}
 
 	void OnMouseUp () {
-		Debug.Log("tile clicked");
 		if (parentPlatform.isPlayer) {
 			parentPlatform.SetActiveTile(this);
 		}

@@ -92,34 +92,38 @@ public class AIController : MonoBehaviour {
 			actionStore = maxActionStore;
 		}
 
-		if (actionStore >= 1) {
-			switch (highestPressure) {
-				case "silo":
+		if (state != "defeated" && platform) {
+			if (actionStore >= 1) {
+				switch (highestPressure) {
+					case "silo":
 					desiredBuild = "Rocket Silo";
 					break;
 
-				case "generator":
+					case "generator":
 					desiredBuild = "Solar Generator";
 					break;
 
-				case "booster":
+					case "booster":
 					desiredBuild = "Small Booster";
 					break;
 
-				default:
+					default:
 					break;
-			}
+				}
 
-			if (CanBuild(desiredBuild)) {
-				newActiveTile = FindEmptyTile();
+				if (CanBuild(desiredBuild)) {
+					newActiveTile = FindEmptyTile();
 
-				if (newActiveTile) {
-					platform.SetActiveTile(newActiveTile);
-					platform.RequestBuild(desiredBuild);
-					actionStore--;
-					pressure[highestPressure] = 0;
+					if (newActiveTile) {
+						platform.SetActiveTile(newActiveTile);
+						platform.RequestBuild(desiredBuild);
+						actionStore--;
+						pressure[highestPressure] = 0;
+					}
 				}
 			}
+		} else {
+			state = "defeated";
 		}
 	}
 

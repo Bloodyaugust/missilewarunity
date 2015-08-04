@@ -45,7 +45,6 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (cfgHandler) {
-			Debug.Log(cfgHandler.numEnemies);
 			if (cfgHandler.numEnemies > 0) {
 				numEnemies = cfgHandler.numEnemies;
 			}

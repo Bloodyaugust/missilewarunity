@@ -67,6 +67,7 @@ MonoBehaviour:
   health: 1
   actionInterval: 5
   shieldRegenAmount: 10
+  shieldMaxAmount: 25
   energyGenerationAmount: 0
   fireInterval: 0
   buildQueueMax: 0
@@ -147,6 +148,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: actionInterval
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shieldMaxAmount
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

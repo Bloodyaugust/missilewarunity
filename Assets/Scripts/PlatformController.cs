@@ -21,11 +21,12 @@ public class PlatformController : MonoBehaviour {
 	public float baseShieldGain = 2;
 	public float shieldFullRechargeInterval = 10;
 	public float guaranteedLeakSpeed = 800;
-	public float shieldLeakModifier = 0.9f;
+	public float shieldLeakModifier = 0.5f;
 	public int team = 0;
 	public int owner = 0;
 	public bool shieldActive = true;
 	public bool isPlayer = true;
+	public bool isAlive = true;
 
 	GameObject shieldObject;
 	SpriteRenderer shieldRenderer;
@@ -96,42 +97,50 @@ public class PlatformController : MonoBehaviour {
 		timeToEnergyGain -= Time.deltaTime;
 		timeToShieldGain -= Time.deltaTime;
 
-		if (!targetPlatform) {
-			RetargetPlatform();
-		}
-
-		if (shieldActive) {
-			if (shield <= 0) {
-				shield = 0;
-				shieldActive = false;
-
-				timeToShieldFullRecharge = shieldFullRechargeInterval;
-				shieldObject.SetActive(false);
-				shieldCollider.enabled = false;
-			} else {
-				shieldRenderer.color = new Color(1f, 1f, 1f, (shield / shieldMax));
+		if (isAlive) {
+			if (!targetPlatform) {
+				RetargetPlatform();
 			}
 
-			if (timeToShieldGain <= 0) {
-				timeToShieldGain = baseShieldInterval;
-				AddShield(baseShieldGain);
+			if (shieldActive) {
+				if (shield <= 0) {
+					shield = 0;
+					shieldActive = false;
+
+					timeToShieldFullRecharge = shieldFullRechargeInterval;
+					shieldObject.SetActive(false);
+					shieldCollider.enabled = false;
+				} else {
+					shieldRenderer.color = new Color(1f, 1f, 1f, (shield / shieldMax));
+				}
+
+				if (timeToShieldGain <= 0) {
+					timeToShieldGain = baseShieldInterval;
+					AddShield(baseShieldGain);
+				}
+			} else {
+				timeToShieldFullRecharge -= Time.deltaTime;
+
+				if (timeToShieldFullRecharge <= 0) {
+					timeToShieldFullRecharge = 0;
+					shieldActive = true;
+					shield = shieldMax;
+					shieldObject.SetActive(true);
+					shieldCollider.enabled = true;
+				}
+			}
+
+			if (timeToEnergyGain <= 0) {
+				timeToEnergyGain = baseEnergyInterval;
+				energy += baseEnergyGain;
 			}
 		} else {
-			timeToShieldFullRecharge -= Time.deltaTime;
-
-			if (timeToShieldFullRecharge <= 0) {
-				timeToShieldFullRecharge = 0;
-				shieldActive = true;
-				shield = shieldMax;
-				shieldObject.SetActive(true);
-				shieldCollider.enabled = true;
-			}
+			Destroy(gameObject);
 		}
+	}
 
-		if (timeToEnergyGain <= 0) {
-			timeToEnergyGain = baseEnergyInterval;
-			energy += baseEnergyGain;
-		}
+	void CommandDeath() {
+		isAlive = false;
 	}
 
 	public GameObject RequestBuildingTarget() {
@@ -231,7 +240,8 @@ public class PlatformController : MonoBehaviour {
 	}
 
 	public float GetLeakChance(float speed) {
-		float chance = (speed / guaranteedLeakSpeed) + ((shieldMax - shield) / shieldMax) * shieldLeakModifier;
+		float chance = 1 - (Mathf.Sin(speed / guaranteedLeakSpeed)) + Mathf.Sin(shield / shieldMax) * shieldLeakModifier;//(speed / guaranteedLeakSpeed) + ((shieldMax - shield) / shieldMax) * shieldLeakModifier;
+		Debug.Log(chance);
 		return chance;
 	}
 
@@ -249,6 +259,10 @@ public class PlatformController : MonoBehaviour {
 		if (shieldActive) {
 			shield -= amount;
 		}
+	}
+
+	public void ChangeMaxShield(float amount) {
+		shieldMax += amount;
 	}
 
 	public void AddEnergy(float amount) {
