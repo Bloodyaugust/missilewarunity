@@ -6,7 +6,7 @@ using System;
 public class ConfigHandler : MonoBehaviour {
 
 	public Texture2D[] platformTextures;
-	public int[] platformIdentities;
+	public int[][] platformIdentities;
 	public int numEnemies = 1;
 	public int difficulty = 1;
 
@@ -33,7 +33,7 @@ public class ConfigHandler : MonoBehaviour {
 		if (platformDirectory) {
 			FileInfo[] info = dir.GetFiles("*.png");
 			platformTextures = new Texture2D[info.Length];
-			platformIdentities = new int[info.Length];
+			platformIdentities = new int[info.Length][];
 
 			int i = 0;
 			foreach (FileInfo f in info) {
@@ -43,7 +43,12 @@ public class ConfigHandler : MonoBehaviour {
 				platformIdentities[i] = TextureToIdentity(platformTextures[i]);
 				i++;
 			}
+
+			Debug.Log(platformIdentities);
 		}
+
+		GameObject camera = GameObject.FindWithTag("MainCamera");
+		camera.SendMessage("Init");
 	}
 
 	// Update is called once per frame

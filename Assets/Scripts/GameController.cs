@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 	public GameObject aiControllerPrefab;
 	public float platformDistance;
 
-	ConfigHandler cfgHandler;
+	public ConfigHandler cfgHandler;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +17,15 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Awake () {
+
+	}
+
+	// Update is called once per frame
+	void Update () {
+
+	}
+
+	void Init() {
 		PlatformController currentPlatformController;
 		GameObject configObject = GameObject.FindWithTag("config");
 		GameObject currentPlatform, currentAIController;
@@ -38,8 +47,11 @@ public class GameController : MonoBehaviour {
 				difficulty = cfgHandler.difficulty;
 			}
 		}
-		
+
+		Debug.Log(cfgHandler);
+		Debug.Log(cfgHandler.platformIdentities);
 		int[] cells = cfgHandler.platformIdentities[0];
+		platformDistance = Mathf.Sqrt(cells.Length) * 64;
 
 		numPlatforms += numEnemies;
 		platforms = new PlatformController[numPlatforms];
@@ -70,10 +82,5 @@ public class GameController : MonoBehaviour {
 		for (int i = 0; i < numPlatforms; i++) {
 			platforms[i].GetComponent<PlatformController>().RetargetPlatform();
 		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-
 	}
 }
