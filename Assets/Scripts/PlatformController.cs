@@ -273,6 +273,16 @@ public class PlatformController : MonoBehaviour {
 		health -= amount;
 	}
 
+	public bool DrainEnergy(float amount) {
+		float amountPerSecond = amount * Time.deltaTime;
+		if (energy - amountPerSecond >= 0) {
+			energy -= amountPerSecond;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public bool CanBuildTarget(string buildingName) {
 		GameObject matchingBuilding = buildingPrefabs[0];
 		BuildingController building;

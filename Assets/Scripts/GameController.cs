@@ -22,20 +22,6 @@ public class GameController : MonoBehaviour {
 		GameObject currentPlatform, currentAIController;
 		Vector3 currentPlatformPosition;
 		float currentAngle = 0;
-		int[] cells = new int[25];
-		cells[2] = 1;
-		cells[6] = 1;
-		cells[7] = 1;
-		cells[8] = 1;
-		cells[10] = 1;
-		cells[11] = 1;
-		cells[12] = 1;
-		cells[13] = 1;
-		cells[14] = 1;
-		cells[16] = 1;
-		cells[17] = 1;
-		cells[18] = 1;
-		cells[22] = 1;
 		int numEnemies = 1;
 		int difficulty = 1;
 		int numPlatforms = 1;
@@ -52,6 +38,8 @@ public class GameController : MonoBehaviour {
 				difficulty = cfgHandler.difficulty;
 			}
 		}
+		
+		int[] cells = cfgHandler.platformIdentities[0];
 
 		numPlatforms += numEnemies;
 		platforms = new PlatformController[numPlatforms];

@@ -18,6 +18,7 @@ public class BuildingController : MonoBehaviour {
 	public float shieldRegenAmount = 1;
 	public float shieldMaxAmount = 0;
 	public float energyGenerationAmount = 1;
+	public float energyConsumption = 1;
 	public float fireInterval = 1;
 	public int buildQueueMax = 5;
 	public int currentFireIndex = 0;
@@ -27,6 +28,8 @@ public class BuildingController : MonoBehaviour {
 	public float timeToAction = 0;
 	public float timeToFire = 0;
 
+	bool powered = false;
+
 	// Use this for initialization
 	void Start () {
 		parentPlatform = transform.parent.GetComponent<PlatformController>();
@@ -35,6 +38,8 @@ public class BuildingController : MonoBehaviour {
 		if (buildingType == "silo") {
 			buildQueue = new GameObject[buildQueueMax];
 			buildQueue[0] = baseProjectilePrefab;
+		} else if (buildingType == "generator") {
+			powered = true;
 		}
 
 		parentPlatform.ChangeMaxShield(shieldMaxAmount);
@@ -42,15 +47,20 @@ public class BuildingController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		timeToAction -= Time.deltaTime;
 		if (buildingType == "silo") {
 			if (state == "firing") {
 				timeToFire -= Time.deltaTime;
-				timeToAction += Time.deltaTime;
 			}
 		}
+		if (buildingType != "generator") {
+			powered = parentPlatform.DrainEnergy(energyConsumption);
+		}
 
-		if (timeToAction <= 0) {
+		if (powered && state != "firing") {
+			timeToAction -= Time.deltaTime;
+		}
+
+		if (timeToAction <= 0 && powered) {
 			timeToAction = actionInterval;
 
 			switch (buildingType) {

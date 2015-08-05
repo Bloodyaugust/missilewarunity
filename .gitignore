@@ -3,3 +3,5 @@ Obj/
 UnityGenerated/
 Library/
 Assets/AssetStoreTools*
+*.exe
+missilewar_Data
