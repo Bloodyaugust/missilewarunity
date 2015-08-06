@@ -27,6 +27,7 @@ public class PlatformController : MonoBehaviour {
 	public bool shieldActive = true;
 	public bool isPlayer = true;
 	public bool isAlive = true;
+	public bool lastPlatform = false;
 
 	GameObject shieldObject;
 	SpriteRenderer shieldRenderer;
@@ -226,7 +227,7 @@ public class PlatformController : MonoBehaviour {
 
 		platforms = GameObject.FindGameObjectsWithTag("platform");
 
-		if (platforms.Length >= 1) {
+		if (platforms.Length > 1) {
 			while(!newTargetPlatform) {
 				randomSelector = Random.Range(0, platforms.Length);
 
@@ -236,6 +237,8 @@ public class PlatformController : MonoBehaviour {
 			}
 
 			targetPlatform = newTargetPlatform.GetComponent<PlatformController>();
+		} else {
+			lastPlatform = true;
 		}
 	}
 
