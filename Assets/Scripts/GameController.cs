@@ -47,9 +47,7 @@ public class GameController : MonoBehaviour {
 				difficulty = cfgHandler.difficulty;
 			}
 		}
-
-		Debug.Log(cfgHandler);
-		Debug.Log(cfgHandler.platformIdentities);
+		
 		int[] cells = cfgHandler.platformIdentities[0];
 		platformDistance = Mathf.Sqrt(cells.Length) * 64;
 

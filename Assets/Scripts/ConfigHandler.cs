@@ -43,8 +43,6 @@ public class ConfigHandler : MonoBehaviour {
 				platformIdentities[i] = TextureToIdentity(platformTextures[i]);
 				i++;
 			}
-
-			Debug.Log(platformIdentities);
 		}
 
 		GameObject camera = GameObject.FindWithTag("MainCamera");
