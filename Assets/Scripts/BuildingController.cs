@@ -43,6 +43,11 @@ public class BuildingController : MonoBehaviour {
 		}
 
 		parentPlatform.ChangeMaxShield(shieldMaxAmount);
+
+		Vector4 materialCenter = transform.position;
+		materialCenter.z = 0;
+
+		GetComponent<Renderer>().material.SetVector("_Center", materialCenter);
 	}
 
 	// Update is called once per frame

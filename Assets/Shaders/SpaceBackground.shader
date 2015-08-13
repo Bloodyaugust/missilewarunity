@@ -31,8 +31,8 @@ Shader "Skybox/Starfield Procedural" {
         half rnd = random3(round(_Time));
         float4 rndFloat = clamp(rnd.x, -1, 1);
         o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-        o.pos.x = o.pos.x + _WorldSpaceCameraPos.x * -1 + (rndFloat * 6 * sin(_Time * (16 * o.pos.x)));
-        o.pos.y = o.pos.y + _WorldSpaceCameraPos.y * -1 + (rndFloat * 6 * sin(_Time * (16 * o.pos.y)));
+        o.pos.x = o.pos.x + _WorldSpaceCameraPos.x * -1 + (rndFloat * 6 * sin(_Time * (16 + o.pos.x)));
+        o.pos.y = o.pos.y + _WorldSpaceCameraPos.y * -1 + (rndFloat * 6 * sin(_Time * (16 + o.pos.y)));
         o.uv = v.texcoord.xyz * scale;
 
         return o;
