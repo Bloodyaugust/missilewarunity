@@ -47,17 +47,17 @@ Shader "Sprites/DiffuseReplace"
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 			o.color = v.color;
 
-			float4 distance = _Center - v.vertex;
+			float4 distance = _Center - mul(_Object2World, v.texcoord);
 			float magnitude = abs(sqrt(distance.x * distance.x + distance.y * distance.y));
 			float theta = atan2(distance.y, distance.x);
 
-			o.color.a = clamp(sin(_Time * 128 + theta + magnitude), 0, 1);
+			o.color.a = clamp(sin(_Time * 128 + magnitude + theta), 0, 1);
 		}
 
 		void surf (Input IN, inout SurfaceOutput o)
 		{
 			fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
-			if (c[0] == 1 && c[1] == 1 && c[2] == 1 && c[3] > 0 && IN.color.a > 0.8) {
+			if (c[0] == 1 && c[1] == 1 && c[2] == 1 && c[3] > 0 && IN.color.a >= 0.5) {
 				o.Albedo = c.rgb * _Color * c.a;
 				o.Alpha = IN.color.a;
 			} else {
