@@ -20,8 +20,6 @@ SubShader {
 
 	Pass {
 		CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11 and Xbox360; has structs without semantics (struct v2f members vpos)
-#pragma exclude_renderers d3d11 xbox360
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma target 3.0
@@ -52,7 +50,7 @@ SubShader {
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.texcoord);
-				float4 distance = _Center - i.texcoord1.xyxy;
+				float4 distance = i.texcoord1.xyxy;
 				float magnitude = sqrt(dot(distance.xy, distance.xy));
 				float theta = atan2(distance.y, distance.x);
 				float thetaSelector = (_Time * 128) % (3.14159 * 2);
@@ -72,7 +70,7 @@ SubShader {
 					}
 				}
 				if (col.r == 1 && col.g == 1 && col.b == 1) {
-					if (thetaDifference <= 0.5) {
+					if (thetaDifference <= 1) {
 						col = _Color;
 					} else {
 						col = float4(0, 0, 0, 1);
