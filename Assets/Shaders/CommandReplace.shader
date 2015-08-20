@@ -50,9 +50,9 @@ SubShader {
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.texcoord);
-				float4 distance = i.texcoord1.xyxy;
+				float2 distance = i.texcoord1.xy;
 				float magnitude = sqrt(dot(distance.xy, distance.xy));
-				float theta = atan2(distance.y, distance.x);
+				float theta = atan2(distance.x, distance.y);
 				float thetaSelector = (_Time * 128) % (3.14159 * 2);
 				float actualSelector = lerp(-3.14159, 3.14159, thetaSelector / (3.14159 * 2));
 				float thetaDifference;
@@ -70,7 +70,7 @@ SubShader {
 					}
 				}
 				if (col.r == 1 && col.g == 1 && col.b == 1) {
-					if (thetaDifference <= 1) {
+					if (thetaDifference <= 128) {
 						col = _Color;
 					} else {
 						col = float4(0, 0, 0, 1);
