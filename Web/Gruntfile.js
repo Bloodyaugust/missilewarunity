@@ -1,8 +1,19 @@
+var fs = require('fs');
+var path = require('path');
+
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    copy: {
+      main: {
+        cwd: 'public',
+        dest: '../BrowserAssets/',
+        expand: true,
+        src: '**'
+      }
+    },
     express: {
       options: {
         script: 'index.js'
@@ -15,10 +26,10 @@ module.exports = function(grunt) {
     },
     watch: {
       html: {
-        files: ['public/**/*.html'],
-        tasks: [],
+        files: ['public/**/*'],
+        tasks: ['copy'],
         options: {
-          livereload: 35729
+          livereload: 12345
         }
       }
     }

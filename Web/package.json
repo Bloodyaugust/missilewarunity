@@ -25,6 +25,7 @@
   "dependencies": {
     "express": "^4.13.4",
     "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express-server": "^0.5.3",
     "mustache": "^2.2.1"
