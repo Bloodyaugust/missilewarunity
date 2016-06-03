@@ -1,0 +1,71 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+body {
+  background-color: #CFD8DC;
+  color: white;
+  width: 768px;
+}
+select {
+  background-color: #546E7A;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  padding: 4px;
+}
+select:hover {
+  background-color: #455A64;
+}
+
+.button {
+  background-color: #37474F;
+  border: 2px solid #B0BEC5;
+  border-radius: 4px;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+.button:hover {
+  background-color: #455A64;
+  border: 2px solid #90A4AE;
+}
+.button.start {
+  float: left;
+  left: calc(50% - 24px);
+  margin: 10px;
+  position: relative;
+  width: 100px;
+}
+.button.add {
+  float: left;
+  margin: 10px;
+  margin-left: 0;
+}
+.controls {
+  color: black;
+  float: left;
+  padding: 10px;
+  margin: 10px;
+  width: calc(50% - 40px);
+}
+.player-controls {
+  float: right;
+}
+.player-item {
+  background-color: #607D8B;
+  border: 2px solid #263238;
+  border-radius: 4px;
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  padding: 10px;
+  margin: 10px;
+  width: calc(100% - 44px);
+}
+.player-item.human {
+  width: calc(50% - 44px);
+}
