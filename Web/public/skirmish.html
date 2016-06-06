@@ -8,7 +8,41 @@
   <script src="/res/fetch.js"></script>
   <script src="/res/es6-promise.min.js"></script>
   <script src="/res/util.js"></script>
+  <script type="text/template" id="player-item-ai">
+    <div class="player-item ai">
+      <span class="name">AI {{number}}</span>
+      <div class="player-controls">
+        <select class="color">
+          {{colors}}
+          <option val="{{value}}">{{name}}</option>
+          {{/colors}}
+        </select>
+        <select class="platform">
+          {{platforms}}
+          <option val="{{value}}">{{name}}</option>
+          {{/platforms}}
+        </select>
+        <select class="type">
+          <option val="def">Defensive</option>
+          <option val="off">Offensive</option>
+          <option val="bal">Balanced</option>
+        </select>
+        <select class="difficulty">
+          <option val="easy">Easy</option>
+          <option val="med">Medium</option>
+          <option val="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+  </script>
   <script>
+    $(function () {
+      $('.button.add').click(function (e) {
+        var template = $('#player-item-ai');
+
+
+      })
+    })
   </script>
 </head>
 
