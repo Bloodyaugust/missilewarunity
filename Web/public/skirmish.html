@@ -8,6 +8,7 @@
   <script src="/res/fetch.js"></script>
   <script src="/res/es6-promise.min.js"></script>
   <script src="/res/util.js"></script>
+  <script src="/res/messaging.js"></script>
   <script type="text/template" id="skirmish">
     <div class="player-item human">
       <span class="name" data-name="{{player.name}}">{{player.name}}</span>
@@ -73,6 +74,27 @@
             Messaging.trigger('add', {});
           });
         }
+      });
+
+      Messaging.trigger('update', {
+        ai: [
+          {
+
+          }
+        ],
+        player: {
+
+        },
+        colors: [
+          {
+
+          }
+        ],
+        platforms: [
+          {
+
+          }
+        ]
       });
     })
   </script>

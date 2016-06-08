@@ -8,48 +8,78 @@
   <script src="/res/fetch.js"></script>
   <script src="/res/es6-promise.min.js"></script>
   <script src="/res/util.js"></script>
-  <script type="text/template">
+  <script src="/res/messaging.js"></script>
+  <script type="text/template" id="skirmish">
+    <div class="player-item human">
+      <span class="name" data-name="{{player.name}}">{{player.name}}</span>
+      <div class="player-controls">
+        <select class="color">
+          {{#colors}}
+          <option val="{{value}}">{{name}}</option>
+          {{/colors}}
+        </select>
+        <select class="platform">
+          {{#platforms}}
+          <option val="{{value}}">{{name}}</option>
+          {{/platforms}}
+        </select>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="platform-type">Platforms:
+        <select>
+          <option val="sm">Small</option>
+          <option val="md">Medium</option>
+          <option val="lg">Large</option>
+        </select>
+      </div>
+      <div class="button add">Add AI</div>
+    </div>
+    <div class="player-item ai">
+      <span class="name" data-number="{{number}}">AI {{number}}</span>
+      <div class="player-controls">
+        <select class="color">
+          {{#colors}}
+          <option val="{{value}}">{{name}}</option>
+          {{/colors}}
+        </select>
+        <select class="platform">
+          {{#platforms}}
+          <option val="{{value}}">{{name}}</option>
+          {{/platforms}}
+        </select>
+        <select class="type">
+          <option val="def">Defensive</option>
+          <option val="off">Offensive</option>
+          <option val="bal">Balanced</option>
+        </select>
+        <select class="difficulty">
+          <option val="easy">Easy</option>
+          <option val="med">Medium</option>
+          <option val="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+    <div class="button start">Start Game</div>
+  </script>
+  <script>
+    $(function () {
+      var template = $('#player-item-ai');
+
+      Messaging.addListener(function (event, data) {
+        if (event === 'update') {
+          $('body').html(Mustache.render(template.html(), data))
+
+          $('.button.add').click(function (e) {
+            Messaging.trigger('add', {});
+          });
+        }
+      });
+    })
   </script>
 </head>
 
 <body>
-  <div class="player-item human">
-    <span class="name">Bloodyaugust</span>
-    <div class="player-controls">
-      <select class="color">
-        <option val="red">Red</option>
-      </select>
-      <select class="platform">
-        <option val="1234">CoolPlatform</option>
-      </select>
-    </div>
-  </div>
-  <div class="controls">
-    <div class="platform-type">Platforms:
-      <select>
-        <option val="lg">Large</option>
-      </select>
-    </div>
-    <div class="button add">Add AI</div>
-  </div>
-  <div class="player-item ai">
-    <span class="name">AI 1</span>
-    <div class="player-controls">
-      <select class="color">
-        <option val="blue">Blue</option>
-      </select>
-      <select class="platform">
-        <option val="1234">CoolPlatform</option>
-      </select>
-      <select class="type">
-        <option val="def">Defensive</option>
-      </select>
-      <select class="difficulty">
-        <option val="easy">Easy</option>
-      </select>
-    </div>
-  </div>
-  <div class="button start">Start Game</div>
 </body>
 
 </html>

@@ -10,4 +10,4 @@
   Messaging.addListener = function (callback) {
     listeners.push(callback);
   }
-})(window.Messaging);
+})(window.Messaging = {});
