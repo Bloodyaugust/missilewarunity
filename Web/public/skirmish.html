@@ -15,12 +15,12 @@
       <div class="player-controls">
         <select class="color">
           {{#colors}}
-          <option val="{{value}}">{{name}}</option>
+          <option value="{{value}}" style="background-color: {{value}};">{{name}}</option>
           {{/colors}}
         </select>
         <select class="platform">
           {{#platforms}}
-          <option val="{{value}}">{{name}}</option>
+          <option value="{{value}}">{{name}}</option>
           {{/platforms}}
         </select>
       </div>
@@ -28,43 +28,59 @@
     <div class="controls">
       <div class="platform-type">Platforms:
         <select>
-          <option val="sm">Small</option>
-          <option val="md">Medium</option>
-          <option val="lg">Large</option>
+          <option value="sm">Small</option>
+          <option value="md">Medium</option>
+          <option value="lg">Large</option>
         </select>
       </div>
       <div class="button add">Add AI</div>
     </div>
+    {{#ai}}
     <div class="player-item ai">
       <span class="name" data-number="{{number}}">AI {{number}}</span>
       <div class="player-controls">
         <select class="color">
           {{#colors}}
-          <option val="{{value}}">{{name}}</option>
+          <option value="{{value}}" style="background-color: {{value}};">{{name}}</option>
           {{/colors}}
         </select>
         <select class="platform">
           {{#platforms}}
-          <option val="{{value}}">{{name}}</option>
+          <option value="{{value}}">{{name}}</option>
           {{/platforms}}
         </select>
         <select class="type">
-          <option val="def">Defensive</option>
-          <option val="off">Offensive</option>
-          <option val="bal">Balanced</option>
+          <option value="def">Defensive</option>
+          <option value="off">Offensive</option>
+          <option value="bal">Balanced</option>
         </select>
         <select class="difficulty">
-          <option val="easy">Easy</option>
-          <option val="med">Medium</option>
-          <option val="hard">Hard</option>
+          <option value="easy">Easy</option>
+          <option value="med">Medium</option>
+          <option value="hard">Hard</option>
         </select>
       </div>
     </div>
+    {{/ai}}
     <div class="button start">Start Game</div>
   </script>
   <script>
     $(function () {
-      var template = $('#player-item-ai');
+      var possibleColors = [
+          {
+            value: '#ff0000',
+            name: 'Red'
+          },
+          {
+            value: '#0000ff',
+            name: 'Blue'
+          },
+          {
+            value: '#00ff00',
+            name: 'Green'
+          }
+        ],
+        template = $('#skirmish');
 
       Messaging.addListener(function (event, data) {
         if (event === 'update') {
@@ -73,27 +89,57 @@
           $('.button.add').click(function (e) {
             Messaging.trigger('add', {});
           });
+
+          $('.button.start').click(function (e) {
+            var ai = [],
+              player = {};
+
+            player.color = $('.player-item.human').find('.color').val();
+            player.platform = $('.player-item.human').find('.platform').val();
+
+            $('.player-item.ai').each(function (index, el) {
+              ai.push({
+                color: $(el).find('.color').val(),
+                platform: $(el).find('.platform').val(),
+                type: $(el).find('.type').val(),
+                difficulty: $(el).find('.difficulty').val(),
+              });
+            });
+
+            console.log(player, ai);
+            Messaging.trigger('start', {
+              player: player,
+              ai: ai
+            });
+          });
         }
       });
 
       Messaging.trigger('update', {
         ai: [
           {
-
+            number: 1
           }
         ],
         player: {
-
+          name: 'Bloodyaugust'
         },
         colors: [
-          {
 
-          }
         ],
         platforms: [
           {
-
-          }
+            value: 1234,
+            name: 'BestPlatform'
+          },
+          {
+            value: 1235,
+            name: 'BestPlatform2'
+          },
+          {
+            value: 1236,
+            name: 'BestPlatform3'
+          },
         ]
       });
     })
