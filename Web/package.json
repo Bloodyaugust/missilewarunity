@@ -1,0 +1,33 @@
+{
+  "name": "missile-war-ui",
+  "version": "0.0.0",
+  "description": "The UI piece for the Unity3D game Missile War.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bloodyaugust/missilewarunity.git"
+  },
+  "keywords": [
+    "ui",
+    "missile",
+    "war",
+    "missilewar"
+  ],
+  "author": "Greyson Richey <greysonrichey@gmail.com> (http://synsugarstudio.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bloodyaugust/missilewarunity/issues"
+  },
+  "homepage": "https://github.com/Bloodyaugust/missilewarunity#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express-server": "^0.5.3",
+    "mustache": "^2.2.1"
+  }
+}
