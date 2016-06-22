@@ -486,7 +486,7 @@ namespace Gamestrap
         }
 
         /// <summary>
-        /// Looks recursively for component Text in the GameObjects children 
+        /// Looks recursively for component Text in the GameObjects children
         /// and also changes the color to the Detail variable if it finds any.
         /// </summary>
         /// <param name="go">UI GameObject with children</param>
@@ -557,44 +557,6 @@ namespace Gamestrap
 
         public void ActivateEffects(GameObject gameObject)
         {
-            if (gameObject.GetComponent<UnityEngine.UI.Image>() || gameObject.GetComponent<UnityEngine.UI.Text>())
-            {
-                if (shadow)
-                {
-                    ShadowEffect shadowEffect = gameObject.GetComponent<ShadowEffect>();
-                    if (!shadowEffect)
-                    {
-                        shadowEffect = Undo.AddComponent<ShadowEffect>(gameObject);
-                    }
-                    shadowEffect.effectDistance = shadowDistance;
-                    shadowEffect.effectColor = shadowColor;
-                    EditorUtility.SetDirty(gameObject);
-                }
-                else if (gameObject.GetComponent<ShadowEffect>())
-                {
-                    Undo.DestroyObjectImmediate(gameObject.GetComponent<ShadowEffect>());
-                }
-            }
-
-            if (gameObject.GetComponent<UnityEngine.UI.Image>())
-            {
-                if (gradient)
-                {
-                    GradientEffect gradientEffect = gameObject.GetComponent<GradientEffect>();
-                    if (!gradientEffect)
-                    {
-                        gradientEffect = Undo.AddComponent<GradientEffect>(gameObject);
-                    }
-                    gradientEffect.top = gradientTop;
-                    gradientEffect.bottom = gradientBottom;
-                    EditorUtility.SetDirty(gameObject);
-                }
-                else if (gameObject.GetComponent<GradientEffect>())
-                {
-                    Undo.DestroyObjectImmediate(gameObject.GetComponent<GradientEffect>());
-                }
-            }
-
             if (gameObject.transform.childCount > 0) // Recursive search for components
             {
                 for (int i = 0; i < gameObject.transform.childCount; i++)

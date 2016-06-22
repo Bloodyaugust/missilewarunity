@@ -1551,6 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5d62d97fa7119448bcf60600b19438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformTextures: []
   numEnemies: 0
   difficulty: 0
 --- !u!1 &1726313294

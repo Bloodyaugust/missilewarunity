@@ -21,13 +21,13 @@ public class GamestrapHelper
     public static Vector3 RGBtoHSV(Color rgbColor)
     {
         float h, s, v;
-        EditorGUIUtility.RGBToHSV(rgbColor,out h, out s, out v);
+        Color.RGBToHSV(rgbColor,out h, out s, out v);
         return new Vector3(h * 360, s * 255, v * 255);
     }
 
     public static Color HSVtoRGB(Vector3 hsvColor)
     {
-        return EditorGUIUtility.HSVToRGB(hsvColor.x/360f, hsvColor.y/255f, hsvColor.z/255f);
+        return Color.HSVToRGB(hsvColor.x/360f, hsvColor.y/255f, hsvColor.z/255f);
     }
     #endregion
 
