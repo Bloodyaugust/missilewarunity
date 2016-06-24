@@ -5,10 +5,10 @@
   <link rel="stylesheet" type="text/css" href="/res/main.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-  <script src="/res/fetch.js"></script>
-  <script src="/res/es6-promise.min.js"></script>
-  <script src="/res/util.js"></script>
-  <script src="/res/messaging.js"></script>
+  <script src="res/fetch.js"></script>
+  <script src="res/es6-promise.min.js"></script>
+  <script src="res/util.js"></script>
+  <script src="res/messaging.js"></script>
   <script type="text/template" id="skirmish">
     <div class="player-item human">
       <span class="name" data-name="{{player.name}}">{{player.name}}</span>
@@ -65,39 +65,58 @@
     <div class="button start">Start Game</div>
   </script>
   <script>
-    $(function () {
-      var possibleColors = [
-          {
-            value: '#ff0000',
-            name: 'Red'
+    $(function() {
+      var possibleColors = [{
+          value: '#ff0000',
+          name: 'Red'
+        }, {
+          value: '#0000ff',
+          name: 'Blue'
+        }, {
+          value: '#00ff00',
+          name: 'Green'
+        }],
+        template = $('#skirmish'),
+        config = {
+          ai: [{
+            number: 1
+          }],
+          player: {
+            name: 'Bloodyaugust'
           },
-          {
-            value: '#0000ff',
-            name: 'Blue'
-          },
-          {
-            value: '#00ff00',
-            name: 'Green'
-          }
-        ],
-        template = $('#skirmish');
+          colors: [
 
-      Messaging.addListener(function (event, data) {
+          ],
+          platforms: [{
+            value: 1234,
+            name: 'BestPlatform'
+          }, {
+            value: 1235,
+            name: 'BestPlatform2'
+          }, {
+            value: 1236,
+            name: 'BestPlatform3'
+          }, ],
+          width: $('html').width(),
+          height: $('html').height()
+        };
+
+      Messaging.addListener(function(event, data) {
         if (event === 'update') {
           $('body').html(Mustache.render(template.html(), data))
 
-          $('.button.add').click(function (e) {
+          $('.button.add').click(function(e) {
             Messaging.trigger('add', {});
           });
 
-          $('.button.start').click(function (e) {
+          $('.button.start').click(function(e) {
             var ai = [],
               player = {};
 
             player.color = $('.player-item.human').find('.color').val();
             player.platform = $('.player-item.human').find('.platform').val();
 
-            $('.player-item.ai').each(function (index, el) {
+            $('.player-item.ai').each(function(index, el) {
               ai.push({
                 color: $(el).find('.color').val(),
                 platform: $(el).find('.platform').val(),
@@ -113,35 +132,13 @@
             });
           });
         }
+
+        if (event === "platforms") {
+          alert(data);
+        }
       });
 
-      Messaging.trigger('update', {
-        ai: [
-          {
-            number: 1
-          }
-        ],
-        player: {
-          name: 'Bloodyaugust'
-        },
-        colors: [
-
-        ],
-        platforms: [
-          {
-            value: 1234,
-            name: 'BestPlatform'
-          },
-          {
-            value: 1235,
-            name: 'BestPlatform2'
-          },
-          {
-            value: 1236,
-            name: 'BestPlatform3'
-          },
-        ]
-      });
+      Messaging.trigger('update', config);
     })
   </script>
 </head>

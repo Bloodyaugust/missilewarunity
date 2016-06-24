@@ -6,3 +6,6 @@ Assets/AssetStoreTools*
 *.exe
 missilewar_Data
 Gamestrap*
+ZFBrowser*
+*.sln
+*.csproj
