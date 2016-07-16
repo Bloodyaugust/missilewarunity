@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System;
+using SimpleJSON;
 using ZenFulcrum.EmbeddedBrowser;
 
 public class ConfigHandler : MonoBehaviour {
@@ -17,6 +18,7 @@ public class ConfigHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		JSONClass rootNode = new JSONClass();
 		string thisDirectory = Directory.GetCurrentDirectory();
 		bool platformDirectory = false;
 
@@ -48,12 +50,14 @@ public class ConfigHandler : MonoBehaviour {
 
 				platformTextures[i] = currentTexture.texture;
 				platformNames[i] = Path.GetFileNameWithoutExtension(f + "");
+				rootNode["platforms"][i]["name"] = platformNames[i];
+				rootNode["platforms"][i]["value"] = i.ToString();
 				platformIdentities[i] = TextureToIdentity(platformTextures[i]);
 				i++;
 			}
 
 			browser.CallFunction("Messaging.trigger", "platforms", JsonUtility.ToJson(new string[1]{"test"}));
-			Debug.Log(JsonUtility.ToJson(new string[1]{"test"}));
+			Debug.Log(rootNode.ToJSON(4));
 		}
 	}
 
