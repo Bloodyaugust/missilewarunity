@@ -18,7 +18,9 @@ public class ConfigHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		JSONClass rootNode = new JSONClass();
+		JSONObject configJSON = new JSONObject();
+		JSONObject j = new JSONObject();
+		JSONObject platforms = new JSONObject(JSONObject.Type.ARRAY);
 		string thisDirectory = Directory.GetCurrentDirectory();
 		bool platformDirectory = false;
 
@@ -44,20 +46,29 @@ public class ConfigHandler : MonoBehaviour {
 			platformNames = new string[info.Length];
 			platformIdentities = new int[info.Length][];
 
+			configJSON.AddField("player", "Bloodyaugust");
+			configJSON.AddField("platforms", platforms);
+
 			int i = 0;
 			foreach (FileInfo f in info) {
+				j = new JSONObject();
 				WWW currentTexture = new WWW("file:///" + f);
 
 				platformTextures[i] = currentTexture.texture;
 				platformNames[i] = Path.GetFileNameWithoutExtension(f + "");
-				rootNode["platforms"][i]["name"] = platformNames[i];
-				rootNode["platforms"][i]["value"] = i.ToString();
 				platformIdentities[i] = TextureToIdentity(platformTextures[i]);
+
+				platforms.Add(j);
+				j.AddField("name", platformNames[i]);
+				j.AddField("value", i.ToString());
+
+				Debug.Log(Path.GetFileNameWithoutExtension(f + ""));
+
 				i++;
 			}
 
-			browser.CallFunction("Messaging.trigger", "platforms", JsonUtility.ToJson(new string[1]{"test"}));
-			Debug.Log(rootNode.ToJSON(4));
+			browser.CallFunction("Messaging.trigger", "platforms", configJSON.ToString());
+			Debug.Log(configJSON.ToString());
 		}
 	}
 
